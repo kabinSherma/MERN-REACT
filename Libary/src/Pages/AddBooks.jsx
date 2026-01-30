@@ -1,8 +1,16 @@
-import React from 'react'
+
+import React  from 'react'
+import Form from './Components/Form'
+
 
 const AddBooks = () => {
+ 
+
+
   return (
-    <div>AddBooks</div>
+    
+    <Form types={"Add"}/>
+
   )
 }
 

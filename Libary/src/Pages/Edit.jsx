@@ -1,8 +1,8 @@
 import React from 'react'
-
+import Form from "./Components/Form"
 const Edit = () => {
   return (
-    <div>Edit</div>
+   < Form types={"Edit"}/>
   )
 }
 

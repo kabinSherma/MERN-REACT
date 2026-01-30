@@ -3,12 +3,14 @@ import Layout from '../GlobalComponents/Layout/Layout'
 import Cards from './Components/Cards'
 import axios from 'axios'
 const Home = () => {
-   const [book,setBook]=useState([])
+   const [books,setBook]=useState([])
 
   const fetchBook =async()=>{
     const response = await axios.get("http://localhost:3000/book/")
-    if(response == 200){
-      console.log("Book Fetched")
+    if(response.status === 200){
+      setBook(
+        response.data.data
+      )
     }
   }
 
@@ -20,11 +22,14 @@ const Home = () => {
     <Layout>
 
       <div className='m-25 flex justify-evenly flex-wrap'>
-        <Cards />
-        <Cards />
-        <Cards />
-        <Cards />
-        <Cards />
+        {
+          books.length > 0 && books.map((book)=>{
+            return (
+                 <Cards book={book}/>
+                )
+          })
+        }
+        
         
       </div>
 
