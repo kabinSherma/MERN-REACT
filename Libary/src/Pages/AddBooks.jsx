@@ -1,16 +1,39 @@
-
-import React  from 'react'
-import Form from './Components/Form'
+import React from 'react'
+import { data, useNavigate } from 'react-router'
+import Form from  './Components/Form'
+import axios from 'axios'
 
 
 const AddBooks = () => {
- 
 
+  const navigate =useNavigate()
+  const handleSubmit =async(book,image)=>{
 
-  return (
+    const formData = new FormData()
+    // console.log( book)
+    const bookArray=Object.entries(book)
+    bookArray.forEach(([key,value])=>{
+      formData.append(key,value)
+    })
+
+    formData.append('image',image)
+
+    const response =await axios.post ("http://localhost:3000/book",formData)
+    if(response.status === 201){
+     alert ("Book added successfully") 
+     navigate('/')
+    }
+    else {
+      alert("Something went wrong")
+    }
     
-    <Form types={"Add"}/>
 
+
+
+  }
+ 
+  return (
+    < Form  types={"Add"} submit= {handleSubmit}/>
   )
 }
 

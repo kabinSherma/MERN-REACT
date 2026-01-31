@@ -1,57 +1,79 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Layout from '../../GlobalComponents/Layout/Layout'
 
-const Form = ({types}) => {
+const Form = ({types,submit}) => {
 
+
+    const [book,setBook] = useState({
+        bookName:"",
+        bookPrice:"",
+        autherName:'',
+        publishedAt:'',
+        publication:'',
+        
+        isbnNumber:""
+    })
+
+    const [image,setImage] = useState(null)
+
+    const handleChange = (e)=>{
+        const {name,value}=e.target
+        setBook ( {
+            ...book,
+            [name] : value 
+         })
+        
+    }
+    
+
+
+
+    const handleSubmit =(e)=>{
+        e.preventDefault()
+        submit(book,image)
+    }
 
   return (
     <Layout >
-    <body class="bg-gray-100 flex items-center justify-center min-h-screen mt-15">
-    <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-6 text-center"> { types == "Edit"? "Edit":"Add"} a Book</h2>
-        <form action="#" method="POST" className="space-y-4" >
-          
-            <div>
-                <label for="book_name" className="block text-sm font-medium text-gray-700">Book Name</label>
-                <input type="text" id="book_name" name="bookName" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required />
-            </div>
-
-            <div>
-                <label for="book_price" className="block text-sm font-medium text-gray-700">Book Price</label>
-                <input type="text" id="book_price" name="bookPrice" step="0.01" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required />
-            </div>
-
-            <div>
-                <label for="isbn" className="block text-sm font-medium text-gray-700">ISBN Number</label>
-                <input type="text" id="isbn" name="isbnNumber" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required />
-            </div>
-
-            <div>
-                <label for="author_name" className="block text-sm font-medium text-gray-700">Author Name</label>
-                <input  type="text" id="author_name" name="authorName" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required />
-            </div>
-
-            <div>
-                <label for="published_at" className="block text-sm font-medium text-gray-700">Published At</label>
-                <input  type="date" id="published_at" name="publishedAt" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required />
-            </div>
-
-            <div>
-                <label for="publication" className="block text-sm font-medium text-gray-700">Publication</label>
-                <input  type="text" id="publication" name="publication" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required />
-            </div>
-
-            <div>
-                <label for="image" className="block text-sm font-medium text-gray-700">Image</label>
-                <input  type="file" id="image" name="image" accept="image/png,jpg,jpge" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
-            </div>
-
-            <div className="text-center">
-                <button type="submit" className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">{types == "Edit"? "Edit":"Add"} Book</button>
-            </div>
-        </form>
+    
+<form class="max-w-sm mx-auto space-y-4 mt-25 mb-25" onSubmit={handleSubmit}>
+    <div>
+        <h2 className="font-bold text-orange-400 text-3xl"> { types === "Add"? "Add" : "Edit"} Book</h2>
     </div>
-</body>
+    <div>
+        <label for="visitors" class="block mb-2.5 text-sm font-medium text-heading">Book Name</label>
+        <input onChange={handleChange} type="text" id="visitors" name="bookName" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-2.5 py-2 shadow-xs placeholder:text-body" placeholder="" required />
+    </div>
+    <div>
+        <label for="visitors" class="block mb-2.5 text-sm font-medium text-heading">Book Price</label>
+        <input onChange={handleChange} type="text" id="visitors" name="bookPrice" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-2.5 py-2 shadow-xs placeholder:text-body" placeholder="" required />
+    </div>
+    <div>
+        <label for="visitors" class="block mb-2.5 text-sm font-medium text-heading">Auther Name</label>
+        <input onChange={handleChange} type="text" id="visitors" name="autherName" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-2.5 py-2 shadow-xs placeholder:text-body" placeholder="" required />
+    </div>
+    <div>
+        <label for="visitors" class="block mb-2.5 text-sm font-medium text-heading">ISBN Number</label>
+        <input onChange={handleChange} type="text" id="visitors" name="isbnNumber" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-2.5 py-2 shadow-xs placeholder:text-body" placeholder="" required />
+    </div>
+    <div>
+        <label for="visitors" class="block mb-2.5 text-sm font-medium text-heading">Publication</label>
+        <input onChange={handleChange} type="text" id="visitors" name="publication" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-2.5 py-2 shadow-xs placeholder:text-body" placeholder="" required />
+    </div>
+    <div>
+        <label for="visitors" class="block mb-2.5 text-sm font-medium text-heading">Published At</label>
+        <input onChange={handleChange} type="date" id="visitors" name="publishedAt" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-2.5 py-2 shadow-xs placeholder:text-body" placeholder="" required />
+    </div>
+    <div>
+        <label for="visitors" class="block mb-2.5 text-sm font-medium text-heading">Image</label>
+        <input onChange={handleChange} type="file" id="visitors" name="image" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-2.5 py-2 shadow-xs placeholder:text-body"required />
+    </div>
+    <div>
+        <button className="h-10 w-full bg-orange-300 text-black font-bold">Submit</button>
+    </div>
+    
+</form>
+
 
  </Layout>
   )
