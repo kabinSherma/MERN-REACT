@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import Layout from '../GlobalComponents/Layout/Layout'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
 
 const SingleBook = () => {
  
   const {id} = useParams()
+  const navigate = useNavigate()
 
   const [book,setBook]= useState({})
   const fetchBook = async() =>{
@@ -18,6 +19,24 @@ const SingleBook = () => {
   useEffect(()=>{
     fetchBook()
   },[])
+
+  // Delete book
+
+  const handleDelete =async()=>{
+    try {
+      const response = await axios.delete(`http://localhost:3000/book/${id}`)
+      if(response.status=== 200){
+          navigate("/")
+          alert("Book Deleted successfully")
+      }
+    } catch (error) {
+      alert(error?.response?.data?.message)
+      
+    }
+    
+      
+     
+  }
 
   return (
     <Layout>
@@ -35,7 +54,7 @@ const SingleBook = () => {
     </div>
     <div>
       <Link to= {`/Edit`}> <button className="h-10 w-60 bg-orange-400 text-white rounded cursor-pointer">Edit</button></Link>
-      <Link to= {`/Edit/${id}`}> <button className="h-10 w-60 bg-blue-700 text-white rounded cursor-pointer">Delete</button></Link>
+       <button className="h-10 w-60 bg-blue-700 text-white rounded cursor-pointer" onClick={handleDelete}>Delete</button>
     </div>
     </div>
  
