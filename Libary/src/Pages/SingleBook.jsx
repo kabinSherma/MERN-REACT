@@ -53,7 +53,7 @@ const SingleBook = () => {
       <div className=" text-xl mb-2">ISBN Number :{book.isbnNumber} </div>
     </div>
     <div>
-      <Link to= {`/Edit`}> <button className="h-10 w-60 bg-orange-400 text-white rounded cursor-pointer">Edit</button></Link>
+      <Link to= {`/Edit/${id}`}> <button className="h-10 w-60 bg-orange-400 text-white rounded cursor-pointer">Edit</button></Link>
        <button className="h-10 w-60 bg-blue-700 text-white rounded cursor-pointer" onClick={handleDelete}>Delete</button>
     </div>
     </div>

@@ -1,39 +1,94 @@
-import React from 'react'
-import { data, useNavigate } from 'react-router'
-import Form from  './Components/Form'
+import React, { useState } from 'react'
+import Layout from '../GlobalComponents/Layout/Layout'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 
 const AddBooks = () => {
+  const navigate = useNavigate()
 
-  const navigate =useNavigate()
-  const handleSubmit =async(book,image)=>{
+ const [book,setBook] = useState({
+  bookName:"",
+  bookPrice:"",
+  autherName:"",
+  publication:"",
+  publishedAt:"",
+  isbnNumber:""
+ })
 
+  const [image,setImage]=useState()
+
+  const handleChange =(e)=>{
+    const {name,value}=e.target
+    setBook({
+      ...book,
+      [name]:value
+    })
+  }
+
+  const handleSubmit = async(e)=>{
+
+    e.preventDefault()
     const formData = new FormData()
-    // console.log( book)
-    const bookArray=Object.entries(book)
-    bookArray.forEach(([key,value])=>{
+    const newDataArray = Object.entries(book)
+    newDataArray.forEach(([key,value])=>{
       formData.append(key,value)
+      console.log(key,value)
     })
 
     formData.append('image',image)
-
-    const response =await axios.post ("http://localhost:3000/book",formData)
-    if(response.status === 201){
-     alert ("Book added successfully") 
-     navigate('/')
+    const response = await axios.post ('http://localhost:3000/book',formData)
+    if (response.status === 201){
+      alert ("Book added successufully")
+      navigate('/')
     }
     else {
-      alert("Something went wrong")
+      alert ("Something went wrong")
     }
-    
-
-
 
   }
+  
  
   return (
-    < Form  types={"Add"} submit= {handleSubmit}/>
+    <Layout >
+    <form class="max-w-sm mx-auto space-y-4 mt-25 mb-25" onSubmit={handleSubmit}>
+    <div>
+        <h2 className="font-bold text-orange-400 text-3xl"> Add Book</h2>
+    </div>
+    <div>
+        <label for="visitors" class="block mb-2.5 text-sm font-medium text-heading">Book Name</label>
+        <input onChange={handleChange} type="text" id="visitors" name="bookName" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-2.5 py-2 shadow-xs placeholder:text-body" placeholder="" required />
+    </div>
+    <div>
+        <label for="visitors" class="block mb-2.5 text-sm font-medium text-heading">Book Price</label>
+        <input onChange={handleChange} type="number" id="visitors" name="bookPrice" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-2.5 py-2 shadow-xs placeholder:text-body" placeholder="" required />
+    </div>
+    <div>
+        <label for="visitors" class="block mb-2.5 text-sm font-medium text-heading">Auther Name</label>
+        <input onChange={handleChange} type="text" id="visitors" name="autherName" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-2.5 py-2 shadow-xs placeholder:text-body" placeholder="" required />
+    </div>
+    <div>
+        <label for="visitors" class="block mb-2.5 text-sm font-medium text-heading">ISBN Number</label>
+        <input onChange={handleChange} type="number" id="visitors" name="isbnNumber" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-2.5 py-2 shadow-xs placeholder:text-body" placeholder="" required />
+    </div>
+    <div>
+        <label for="visitors" class="block mb-2.5 text-sm font-medium text-heading">Publication</label>
+        <input onChange={handleChange} type="text" id="visitors" name="publication" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-2.5 py-2 shadow-xs placeholder:text-body" placeholder="" required />
+    </div>
+    <div>
+        <label for="visitors" class="block mb-2.5 text-sm font-medium text-heading">Published At</label>
+        <input onChange={handleChange} type="date" id="visitors" name="publishedAt" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-2.5 py-2 shadow-xs placeholder:text-body" placeholder="" required />
+    </div>
+    <div>
+        <label for="visitors" class="block mb-2.5 text-sm font-medium text-heading">Image</label>
+        <input onChange={handleChange} type="file" id="visitors" name="image" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-2.5 py-2 shadow-xs placeholder:text-body"required />
+    </div>
+    <div>
+        <button className="h-10 w-full bg-orange-300 text-black font-bold">Submit</button>
+    </div>
+    
+</form>
+</Layout>
   )
 }
 
